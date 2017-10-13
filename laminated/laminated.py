@@ -6,14 +6,11 @@ class Laminated:
     def __init__(self):
         self._data = OrderedDict()
         self._index = OrderedDict()
+        self._union_data = dict()
         self._names = set()
 
     def __getitem__(self, item):
-        for key in sorted(self._data.keys(), reverse=True):
-            if item in self._data[key]:
-                return self._data[key][item]
-        else:
-            self._data[key][item]
+        return self._union_data[item]
 
     def add_layer(self, data, name=None):
         if name is None:
@@ -25,6 +22,7 @@ class Laminated:
         self._data[name] = data
         self._index[len(self._data)] = name
         self._names.add(name)
+        self._union_data.update(data)
 
     def get_layers(self):
         for name, data in self._data.items():
