@@ -27,3 +27,6 @@ class Laminated:
     def get_layers_names(self):
         for name in self._data.keys():
             yield name
+
+    def get_layer_item(self, name, item):
+        return self._data[name][item]
