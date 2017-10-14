@@ -24,6 +24,6 @@ class Laminated:
         self._names.add(name)
         self._union_data.update(data)
 
-    def get_layers(self):
-        for name, data in self._data.items():
-            yield name, data
+    def get_layers_names(self):
+        for name in self._data.keys():
+            yield name
