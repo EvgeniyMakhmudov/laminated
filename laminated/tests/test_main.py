@@ -38,3 +38,8 @@ def test_get_layer_item(l_minimum):
     assert l_minimum.get_layer_item('base', 'b') == ''
     assert l_minimum.get_layer_item('fix', 'b') == 'B'
     assert l_minimum.get_layer_item('fix', 'a')
+
+
+@pytest.mark.xfail(raises=KeyError)
+def test_get_layer_item_fail(l_minimum):
+    l_minimum.get_layer_item('base', 'c')
