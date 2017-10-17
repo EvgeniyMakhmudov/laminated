@@ -1,5 +1,5 @@
 from uuid import uuid4
-from collections import OrderedDict, defaultdict
+from collections import defaultdict
 
 
 class Laminated:
@@ -7,7 +7,7 @@ class Laminated:
         self._union_data = dict()
         self._names = []
 
-        self._data = defaultdict(OrderedDict)
+        self._data = defaultdict(dict)
 
     def __getitem__(self, item):
         return self._union_data[item]
@@ -17,7 +17,7 @@ class Laminated:
             name = uuid4().hex
 
         if name in self._names:
-            raise Exception()
+            raise ValueError('Duplicate layers names')
 
         self._names.insert(0, name)
         self._union_data.update(data)
