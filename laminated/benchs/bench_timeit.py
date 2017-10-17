@@ -8,6 +8,10 @@ sys.path.append('.')
 import laminated  # noqa
 
 
+REPEAT = 10
+NUMBER = 10000
+
+
 def init_data():
     l = laminated.Laminated()
     for char in string.ascii_lowercase:
@@ -20,16 +24,16 @@ def init_data():
 r = timeit.repeat(
     'import string; [l[char] for char in string.ascii_lowercase]',
     'from __main__ import init_data; l=init_data()',
-    repeat=10,
-    number=1000,
+    repeat=REPEAT,
+    number=NUMBER,
 )
 print('Benchmark 1: getitem: {}'.format(min(r)))
 
 r = timeit.repeat(
     'import string; [l.get_layer_item(char, char) for char in string.ascii_lowercase]',
     'from __main__ import init_data; l=init_data()',
-    repeat=10,
-    number=1000,
+    repeat=REPEAT,
+    number=NUMBER,
 
 )
 print('Benchmark 2: get_layer_item: {}'.format(min(r)))
