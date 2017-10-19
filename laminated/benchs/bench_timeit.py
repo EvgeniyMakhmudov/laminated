@@ -21,6 +21,7 @@ def init_data():
         )
     return l
 
+
 r = timeit.repeat(
     'import string; [l[char] for char in string.ascii_lowercase]',
     'from __main__ import init_data; l=init_data()',
@@ -28,6 +29,7 @@ r = timeit.repeat(
     number=NUMBER,
 )
 print('Benchmark 1: getitem: {}'.format(min(r)))
+
 
 r = timeit.repeat(
     'import string; [l.get_layer_item(char, char) for char in string.ascii_lowercase]',
@@ -37,3 +39,31 @@ r = timeit.repeat(
 
 )
 print('Benchmark 2: get_layer_item: {}'.format(min(r)))
+
+
+r = timeit.repeat(
+    'import string; l.get_dict_at_layer("a")',
+    'from __main__ import init_data; l=init_data()',
+    repeat=REPEAT,
+    number=NUMBER,
+
+)
+print('Benchmark 3: get_dict_at_layer at bottom: {}'.format(min(r)))
+
+r = timeit.repeat(
+    'import string; l.get_dict_at_layer("m")',
+    'from __main__ import init_data; l=init_data()',
+    repeat=REPEAT,
+    number=NUMBER,
+
+)
+print('Benchmark 3: get_dict_at_layer at middle: {}'.format(min(r)))
+
+r = timeit.repeat(
+    'import string; l.get_dict_at_layer("z")',
+    'from __main__ import init_data; l=init_data()',
+    repeat=REPEAT,
+    number=NUMBER,
+
+)
+print('Benchmark 3: get_dict_at_layer at top: {}'.format(min(r)))
