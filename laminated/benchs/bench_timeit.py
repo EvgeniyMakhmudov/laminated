@@ -32,13 +32,13 @@ print('Benchmark 1: getitem: {}'.format(min(r)))
 
 
 r = timeit.repeat(
-    'import string; [l.get_layer_item(char, char) for char in string.ascii_lowercase]',
+    'import string; [l.get_value_at_layer(char, char) for char in string.ascii_lowercase]',
     'from __main__ import init_data; l=init_data()',
     repeat=REPEAT,
     number=NUMBER,
 
 )
-print('Benchmark 2: get_layer_item: {}'.format(min(r)))
+print('Benchmark 2: get_value_at_layer: {}'.format(min(r)))
 
 
 r = timeit.repeat(

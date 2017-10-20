@@ -5,7 +5,7 @@ from collections import defaultdict
 class Laminated:
     def __init__(self):
         self._union_data = dict()
-        self._names = []
+        self._layers_names = []
         self._map_layers_to_keys = defaultdict(list)
 
         self._data = defaultdict(dict)
@@ -17,10 +17,10 @@ class Laminated:
         if name is None:
             name = uuid4().hex
 
-        if name in self._names:
+        if name in self._layers_names:
             raise ValueError('Duplicate layers names')
 
-        self._names.insert(0, name)
+        self._layers_names.insert(0, name)
         self._union_data.update(data)
 
         for k, v in data.items():
@@ -28,29 +28,29 @@ class Laminated:
             self._map_layers_to_keys[name].append(k)
 
     def get_layers_names(self):
-        for name in self._names:
+        for name in self._layers_names:
             yield name
 
-    def get_layer_item(self, name, item):
+    def get_value_at_layer(self, layer_name, key):
         start_search = False
 
-        for layer_name in self._names:
-            if layer_name == name:
+        for current_layer_name in self._layers_names:
+            if current_layer_name == layer_name:
                 start_search = True
             if not start_search:
                 continue
 
-            if layer_name in self._data[item]:
-                return self._data[item][layer_name]
+            if current_layer_name in self._data[key]:
+                return self._data[key][current_layer_name]
         else:
-            raise KeyError('{!r} not in dict'.format(item))
+            raise KeyError('{!r} not in dict'.format(key))
 
     def get_dict_at_layer(self, name):
-        if name not in self._names:
+        if name not in self._layers_names:
             raise ValueError('Layer {!r} not exists')
 
         result = {}
-        for layer_name in reversed(self._names):
+        for layer_name in reversed(self._layers_names):
             for key in self._map_layers_to_keys[layer_name]:
                 result[key] = self._data[key][layer_name]
 
