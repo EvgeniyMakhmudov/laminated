@@ -16,6 +16,9 @@ class Laminated:
     def __iter__(self):
         return iter(self._union_data.keys())
 
+    def get(self, key, default=None):
+        return self._union_data.get(key, default)
+
     def add_layer(self, data, name=None):
         if name is None:
             name = uuid4().hex
