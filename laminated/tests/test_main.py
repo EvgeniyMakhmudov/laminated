@@ -27,3 +27,7 @@ def test_get(l_minimum):
     assert l_minimum.get('c') == 'C'
     assert l_minimum.get('b') == 'B'
     assert l_minimum.get('z') is None
+
+
+def test_items(l_minimum):
+    assert l_minimum._union_data.items() == l_minimum.items()
